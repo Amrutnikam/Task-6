@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registration Form</h1>
+  <form id="registrationForm" onsubmit="validateForm(event)">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <span class="error-message" id="usernameError"></span>
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <span class="error-message" id="emailError"></span>
+    <br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <span class="error-message" id="passwordError"></span>
+    <br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required>
+    <span class="error-message" id="confirmPasswordError"></span>
+    <br>
+
+    <input type="submit" value="Register">
+  </form>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+      
+      // Reset error messages
+      const errorMessages = document.getElementsByClassName('error-message');
+      for (let i = 0; i < errorMessages.length; i++) {
+        errorMessages[i].textContent = '';
+      }
+
+      const form = event.target;
+      const username = form.username.value;
+      const email = form.email.value;
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      // Username validation (must be at least 4 characters long)
+      if (username.length < 4) {
+        document.getElementById('usernameError').textContent = 'Username must be at least 4 characters long.';
+        return;
+      }
+
+      // Email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.match(emailPattern)) {
+        document.getElementById('emailError').textContent = 'Invalid email address.';
+        return;
+      }
+
+      // Password validation (must be at least 6 characters long)
+      if (password.length < 6) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+        return;
+      }
+
+      // Confirm Password validation
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+        return;
+      }
+
+      // If all validations pass, submit the form
+      form.submit();
+    }
+  </script>
+</body>
+</html>
